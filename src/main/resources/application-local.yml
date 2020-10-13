@@ -1,0 +1,42 @@
+server:
+  port: 8180
+spring:
+  #To disable SpringBoot banner from logs, it should not be in local(in dev, qa, etc) yml, please remove after integration
+  main:
+    banner-mode: "off"
+   ## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/employee_crud
+    username: postgres
+    password: root
+  flyway:
+    enabled: true
+    baselineOnMigrate: false
+    schemas: employee_crud
+    validateOnMigrate: false
+  jpa:
+    hibernate:
+      ddl-auto: validate # Hibernate ddl auto (create, create-drop, validate, update)
+    properties: ## Hibernate Properties
+      hibernate:
+        default_schema: employee_crud
+        dialect: org.hibernate.dialect.PostgreSQLDialect # The SQL dialect makes Hibernate generate better SQL for the chosen database
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  cache: #Cache
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+
+swagger:
+  title:  CRUD
+  description:
+  license:
+  basePackage: com.employee.CRUD
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
